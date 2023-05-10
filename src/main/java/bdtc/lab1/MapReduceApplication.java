@@ -26,8 +26,8 @@ public class MapReduceApplication {
 
         Job job = Job.getInstance(conf, "browser count");
         job.setJarByClass(MapReduceApplication.class);
-        job.setMapperClass(HW1Mapper.class);
-        job.setReducerClass(HW1Reducer.class);
+        job.setMapperClass(ClicksMapper.class);
+        job.setReducerClass(ClicksReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
         job.setOutputFormatClass(TextOutputFormat.class);
@@ -35,11 +35,16 @@ public class MapReduceApplication {
         Path outputDirectory = new Path(args[1]);
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, outputDirectory);
+        job.getConfiguration().set("mapreduce.output.basename", "result.csv");
         log.info("=====================JOB STARTED=====================");
         job.waitForCompletion(true);
         log.info("=====================JOB ENDED=====================");
         // проверяем статистику по счётчикам
         Counter counter = job.getCounters().findCounter(CounterType.MALFORMED);
         log.info("=====================COUNTERS " + counter.getName() + ": " + counter.getValue() + "=====================");
-    }
+
+        }
+
+
+
 }
