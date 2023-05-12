@@ -3,13 +3,12 @@ package bdtc.lab1;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ClicksMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+public class Mapper extends org.apache.hadoop.mapreduce.Mapper<LongWritable, Text, Text, IntWritable> {
 
     private Map<Rectangle, String> areas;
     private Map<IntPair, String> temperatures;
@@ -17,10 +16,10 @@ public class ClicksMapper extends Mapper<LongWritable, Text, Text, IntWritable> 
     @Override
     public void setup(Context context) throws IOException, InterruptedException {
         areas = new HashMap<>();
-        areas.put(new Rectangle(0, 0, 500, 500), "Левый верхний угол");
-        areas.put(new Rectangle(500, 0, 1000, 500), "Правый верхний угол");
-        areas.put(new Rectangle(0, 500, 500, 1000), "Левый нижний угол");
-        areas.put(new Rectangle(500, 500, 1000, 1000), "Правый нижний угол");
+        areas.put(new Rectangle(0, 0, 500, 500), "Верхний угол");
+        areas.put(new Rectangle(500, 0, 1000, 500), "Правый угол");
+        areas.put(new Rectangle(0, 500, 500, 1000), "Левый угол");
+        areas.put(new Rectangle(500, 500, 1000, 1000), "Нижний правый угол");
 
     }
 
@@ -33,7 +32,7 @@ public class ClicksMapper extends Mapper<LongWritable, Text, Text, IntWritable> 
         int y = Integer.parseInt(fields[1]);
 
         // Определяем область экрана, в которой произошло нажатие
-        String areaName = "Неизвестная область";
+        String areaName = "Неопределнная область";
         for (Map.Entry<Rectangle, String> entry : areas.entrySet()) {
             Rectangle rect = entry.getKey();
             if (rect.contains(x, y)) {

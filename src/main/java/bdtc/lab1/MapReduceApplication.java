@@ -26,8 +26,8 @@ public class MapReduceApplication {
 
         Job job = Job.getInstance(conf, "browser count");
         job.setJarByClass(MapReduceApplication.class);
-        job.setMapperClass(ClicksMapper.class);
-        job.setReducerClass(ClicksReducer.class);
+        job.setMapperClass(Mapper.class);
+        job.setReducerClass(Reducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
         job.setOutputFormatClass(TextOutputFormat.class);
